@@ -1,4 +1,4 @@
 # Redux
 
-{React + TypeScript + Vite}
+{React + TypeScript + Vite + MUI}
 

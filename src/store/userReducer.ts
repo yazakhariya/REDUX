@@ -1,6 +1,19 @@
 import { ADD_USER, ADD_USER_JSON, REM_USER } from "./consts";
-const defaultState = {
+
+import { UserActionTypes } from "./enum";
+import { UserAction } from "./userReducerTypes";
+
+interface UserState {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  user: any[];
+  loading: boolean;
+  error: null | string;
+}
+
+const defaultState: UserState = {
   user: [],
+  loading: false,
+  error: null,
 };
 
 export const userReducer = (
@@ -36,3 +49,22 @@ export const addUserJsonAction = (payload: unknown) => ({
   type: ADD_USER_JSON,
   payload,
 });
+
+export const newUserReducer = (
+  state = defaultState,
+  action: UserAction
+): UserState => {
+  switch (action.type) {
+    case UserActionTypes.FETCH_USERS:
+      return { ...state, loading: true };
+
+    case UserActionTypes.FETCH_USERS_ONSUCCESS:
+      return { ...state, loading: false, user: action.payload };
+
+    case UserActionTypes.FETCH_USERS_ERROR:
+      return { ...state, error: action.payload };
+
+    default:
+      return state;
+  }
+};

@@ -5,6 +5,9 @@ import { State, StateUser, User } from "./types";
 import { addNumAction, remNumAction } from "./store/cashReducer";
 import { UsersJson } from "./asyncAction/async";
 import { AppDispatch } from "./store";
+import UserList from "./components/UserList";
+import AlbumsList from "./components/AlbumsList";
+import LoadingButton from "@mui/lab/LoadingButton";
 
 function App() {
   const dispatch = useDispatch<AppDispatch>();
@@ -33,6 +36,7 @@ function App() {
 
   return (
     <>
+      <UserList />
       <h1>Redux</h1>
       <div className="card">
         <button onClick={() => addNum(Number(prompt()))}>++</button>
@@ -49,8 +53,17 @@ function App() {
         ) : (
           <p>'No people'</p>
         )}
-        <button onClick={() => dispatch(UsersJson())}>More users</button>
+        <LoadingButton
+          size="small"
+          onClick={() => dispatch(UsersJson())}
+          loadingIndicator="Loading…"
+          variant="outlined"
+        >
+          <span>Fetch data</span>
+        </LoadingButton>
       </div>
+      <br />
+      <AlbumsList />
     </>
   );
 }
